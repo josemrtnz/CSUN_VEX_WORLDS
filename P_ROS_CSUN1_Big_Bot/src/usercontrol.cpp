@@ -5,34 +5,9 @@ userControl::userControl(robotChasis *robot, bool dM){
   simp = robot;
   driverMode = dM;
   simp->set_drive_break_type(pros::E_MOTOR_BRAKE_COAST);
-  simp->rollerIntake.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
-}
-
-void userControl::flyWheelToggle(){
-  if ((flyLastPress == false) && simp->mController.get_digital(pros::E_CONTROLLER_DIGITAL_X)) flyWheelOn = !flyWheelOn;
-  flyLastPress = simp->mController.get_digital(pros::E_CONTROLLER_DIGITAL_X);
-
-  if ((flySpeedToggle == false) && simp->mController.get_digital(pros::E_CONTROLLER_DIGITAL_Y)) flyFast = !flyFast;
-  flySpeedToggle = simp->mController.get_digital(pros::E_CONTROLLER_DIGITAL_Y);
-
-  flyWheelPow = flyFast ? 89 : 89;
-
-  if(flyWheelOn) simp->flyOuttake.move(flyWheelPow);
-  else simp->flyOuttake.move(0);
 }
 
 void userControl::storageRoller(){
-  
-  if (simp->mController.get_digital(pros::E_CONTROLLER_DIGITAL_L1)){
-    simp->leftIntake.move(-13);
-    simp->rightIntake.move(13);
-    simp->rollerIntake.move(51);
-  } 
-  else if (simp->mController.get_digital(pros::E_CONTROLLER_DIGITAL_L2)) {
-    simp->rollerIntake.move(51);
-    simp->leftIntake.move(-64);
-    simp->rightIntake.move(64);
-  }else simp->rollerIntake.move(0);
 }
 
 void userControl::setBrakeMode(){
@@ -41,21 +16,7 @@ void userControl::setBrakeMode(){
 }
 
 void userControl::intakeM(){
-  if(simp->mController.get_digital(pros::E_CONTROLLER_DIGITAL_R2)){
-    simp->leftIntake.move(-100);
-    simp->rightIntake.move(100);
-    if(!simp->limit.get_value()) simp->rollerIntake.move(60);
-    else simp->rollerIntake.move(0);
-
-  } else if(simp->mController.get_digital(pros::E_CONTROLLER_DIGITAL_R1)){ 
-    simp->leftIntake.move(100);
-    simp->rightIntake.move(-100);
-    simp->rollerIntake.move(-90);
-  } else { 
-    simp->leftIntake.move(0);
-    simp->rightIntake.move(0);
-    storageRoller();
-  }
+  
 }
 
 void userControl::driveM(){
@@ -97,7 +58,6 @@ void userControl::setDriveMode(){
 void userControl::driveLoop(){
   while(true){
     intakeM();
-    flyWheelToggle();
     setBrakeMode();
     setDriveMode();
 

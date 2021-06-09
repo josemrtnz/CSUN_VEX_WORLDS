@@ -39,7 +39,6 @@ class userControl{
     void driveMA();
     void intakeM();
     void storageRoller();
-    void flyWheelToggle();
     void setBrakeMode();
 };
 

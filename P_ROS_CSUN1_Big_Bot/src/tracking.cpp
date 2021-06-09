@@ -105,7 +105,6 @@ int odometry::updateScreen(){
     //printf("Distance: %.2lf Y Voltage: %.0f X Voltage: %.0f\n", vMag, yVoltage, xVoltage);
     printf("Tracking Wheels Angle: %0.f   IMU angle: %0.lf\n", angleD, simp->gyroM.get_heading());
     printf("rightTW: %.0lf, leftTW: %0.lf, backTW: %.0lf\n", simp->rightTracker.get_position()*100, simp->leftTracker.get_position()*100, simp->backTracker.get_position()*100);
-    printf("Flywheel RPM: %.1lf, Flywheel Voltage: %.0lf\n\n\n", simp->flyOuttake.get_actual_velocity(), simp->flyOuttake.get_voltage());
     //printf("%.0lf, %.0lf, %.0lf \n", Brain.Timer.time(msec), flyOuttake.velocity(rpm), flyOuttake.voltage(voltageUnits::mV));
 
     //Delays task so it does not hog all resources

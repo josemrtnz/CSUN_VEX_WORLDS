@@ -26,17 +26,11 @@ class autonomousControl{
     /// @param pow Power in percentage units.
     void updateIntakePct(int pow);
 
-    /// Updates the target rpm for the flywheel.
-    ///
-    /// This function will update the current rpm target for the flywheel.
-    /// @param rpm RPM in rotation per minute units.
-    void updateFly(int rpm);
-
     /// Updates the target power for the mid rollers.
     ///
     /// This function will update the current power target for the mid rollers.
     /// @param pow Power in percentage units.
-    void updateRoller(int pwr);
+    void updateRollers(int pwr);
 
     /// Waits until the robot is full.
     ///
@@ -66,12 +60,6 @@ class autonomousControl{
     /// @param deg Degrees to wait until it reaches the target.
     void waitUntilDeg(float deg);
 
-    /// Shoots specified amount of balls.
-    ///
-    /// Will spin the flywheel and midrollers until the specified amount of balls are shot.
-    /// @param balls Number of balls to shoot.
-    void shootBall(int balls);
-
     /// Main loop for the autonomous period.
     ///
     /// This function has a while loop that will always be running during the autonmous period.
@@ -82,11 +70,6 @@ class autonomousControl{
     /// 
     /// N/A
     void visionTowerAlign(int angDeg);
-
-    /// Stops Flywheel
-    ///
-    /// This function will stop the flywheel.
-    void stopFly();
 
     /// Sets PID constants for the robot in autonomous control.
     ///
@@ -133,22 +116,13 @@ class autonomousControl{
     odometry *tracking;
 
     int intakePct = 0;
-    int flyWheelRPM = 0;
     int rollerPct = 0;
-    float flykI = .4;
-    double flyError = 0;
-    double flyVoltage = 0;
-    double flyLastError = 0;
-    int flyApprox = 0;
-    bool firstCross = true;
-    double flyZero = 0;
-    bool shooting = false;
     bool prevShot = 0;
     double rightEncoder;
     double leftEncoder;
     double backEncoder;
-    int visionStatus = 0;
     bool movAB_Enabled = true;
+    bool shooting = false;
     short ballsDeteced = 0;
     short ballsToShoot = 0;
     int lowerBound = 0;
@@ -170,13 +144,9 @@ class autonomousControl{
     float updatePID(PIDSettings *good);
     int turnCap(float distanceMag);
     void movAB();
-    void updateFlyTBH();
     void intakeMove();
-    void flyMove();
     void rollerMove();
     void shootingBall();
     void updateCurrPos();
-    void updateVisionPos();
-    void moveVision();
     void driveM(double a3, double a4, double a1);
 };

@@ -55,28 +55,34 @@ class robotChasis{
     pros::Controller mController = pros::Controller(pros::E_CONTROLLER_MASTER);
 
     /// Front Right Motor Instance
-    pros::Motor frontRight = pros::Motor(9, pros::E_MOTOR_GEARSET_18, true);
+    pros::Motor frontRight = pros::Motor(20, pros::E_MOTOR_GEARSET_18, true);
 
     /// Front Left Motor Instance
-    pros::Motor frontLeft = pros::Motor(8, pros::E_MOTOR_GEARSET_18, true);
+    pros::Motor frontLeft = pros::Motor(20, pros::E_MOTOR_GEARSET_18, true);
 
     /// Back Left Motor Instance
-    pros::Motor backLeft = pros::Motor (18, pros::E_MOTOR_GEARSET_18, false);
+    pros::Motor backLeft = pros::Motor (20, pros::E_MOTOR_GEARSET_18, false);
 
     /// Back Right Motor Instance
-    pros::Motor backRight = pros::Motor(10, pros::E_MOTOR_GEARSET_18, false);
+    pros::Motor backRight = pros::Motor(20, pros::E_MOTOR_GEARSET_18, false);
 
     /// Left Intake Motor Instance
-    pros::Motor leftIntake = pros::Motor(2, pros::E_MOTOR_GEARSET_18, true);
+    pros::Motor leftIntake = pros::Motor(20, pros::E_MOTOR_GEARSET_18, true);
 
     /// Right Intake Motor Instance
-    pros::Motor rightIntake = pros::Motor(1, pros::E_MOTOR_GEARSET_18, true);
-
-    /// Fly Wheel Motor Instance
-    pros::Motor flyOuttake = pros::Motor(14, pros::E_MOTOR_GEARSET_36, true);
+    pros::Motor rightIntake = pros::Motor(20, pros::E_MOTOR_GEARSET_18, true);
 
     /// Roller Motor Instance
-    pros::Motor rollerIntake = pros::Motor(12, pros::E_MOTOR_GEARSET_36, true);
+    pros::Motor roller1 = pros::Motor(1, pros::E_MOTOR_GEARSET_18, false);
+
+    /// Roller Motor Instance
+    pros::Motor roller2 = pros::Motor(4, pros::E_MOTOR_GEARSET_18, false);
+
+    /// Roller Motor Instance
+    pros::Motor roller3 = pros::Motor(5, pros::E_MOTOR_GEARSET_18, false);
+
+    /// Roller Motor Instance
+    pros::Motor roller4 = pros::Motor(6, pros::E_MOTOR_GEARSET_18, false);
 
     //encoder leftTracker = encoder(Brain.ThreeWirePort.E);
     //encoder rightTracker = encoder(Brain.ThreeWirePort.A);
