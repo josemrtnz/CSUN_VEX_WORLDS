@@ -1,9 +1,8 @@
 #include "usercontrol.h"
 #define TURN_SENSITIVITY 1.0
 #define MOVE_SENSITIVITY 1.0
-userControl::userControl(robotChasis *robot, bool dM){
+userControl::userControl(robotChasis *robot){
   simp = robot;
-  driverMode = dM;
   simp->set_drive_break_type(pros::E_MOTOR_BRAKE_COAST);
 }
 
@@ -17,6 +16,51 @@ void userControl::setBrakeMode(){
 
 void userControl::intakeM(){
   
+}
+
+void userControl::liftControl(){
+  rgb_value2 = simp->colorSensor2.get_rgb();
+  rgb_value1 = simp->colorSensor1.get_rgb();
+  if((rgb_value1.blue > rgb_value1.red) && (simp->colorSensor1.get_proximity() > 120)) blue_inside =  true;
+  if(simp->mController.get_digital(pros::E_CONTROLLER_DIGITAL_R1)){
+    if((rgb_value2.blue > rgb_value2.red) && (simp->colorSensor2.get_proximity() > 120)){
+      simp->roller1.move(60);
+      simp->roller2.move(-127);
+      simp->roller3.move(60);
+      simp->roller4.move(80);
+      while(!((simp->line3.get_value() < 2850) || (simp->mController.get_digital(pros::E_CONTROLLER_DIGITAL_B)))){
+        pros::delay(20);
+      }
+      blue_inside = false;
+    } else {
+      if(blue_inside){
+        simp->roller1.move(60); //65
+        simp->roller2.move(60); //65
+        simp->roller3.move(60); //65
+        simp->roller4.move(100); //100
+      } else {
+        simp->roller1.move(100);
+        simp->roller2.move(100);
+        simp->roller3.move(100); 
+        simp->roller4.move(100);
+      }
+    }
+  } else if(simp->mController.get_digital(pros::E_CONTROLLER_DIGITAL_R2)){
+    simp->roller1.move(-127);
+    simp->roller2.move(-127);
+    simp->roller3.move(-127);
+    simp->roller4.move(-127);
+  } else if(simp->mController.get_digital(pros::E_CONTROLLER_DIGITAL_L1)){
+    simp->roller1.move(127);
+    simp->roller2.move(-127);
+    simp->roller3.move(40);
+    simp->roller4.move(0);
+  } else {
+    simp->roller1.move(0);
+    simp->roller2.move(0);
+    simp->roller3.move(0);
+    simp->roller4.move(0);
+  }
 }
 
 void userControl::driveM(){
@@ -37,32 +81,12 @@ void userControl::driveM(){
   }
 }
 
-void userControl::driveMA(){
-  a3 = simp->mController.get_analog(pros::E_CONTROLLER_ANALOG_LEFT_Y);
-  a4 = simp->mController.get_analog(pros::E_CONTROLLER_ANALOG_LEFT_Y);
-  a1 = simp->mController.get_analog(pros::E_CONTROLLER_ANALOG_LEFT_Y);
-
-  double currAngle = ((simp->getPI()/180)*simp->gyroM.get_heading());
-  
-  simp->frontLeft.move((a4*cos(simp->get_flbr()-currAngle) + a3*sin(simp->get_flbr()-currAngle)) - (a1 * TURN_SENSITIVITY));
-  simp->frontRight.move(-(a4*cos(simp->get_frbl()-currAngle) + a3*sin(simp->get_frbl()-currAngle)) - (a1 * TURN_SENSITIVITY));
-  simp->backLeft.move((a4*cos(simp->get_frbl()-currAngle) + a3*sin(simp->get_frbl()-currAngle)) - (a1 * TURN_SENSITIVITY));
-  simp->backRight.move(-(a4*cos(simp->get_flbr()-currAngle) + a3*sin(simp->get_flbr()-currAngle)) - (a1 * TURN_SENSITIVITY));
-}
-
-void userControl::setDriveMode(){
-  if(simp->mController.get_digital(pros::E_CONTROLLER_DIGITAL_LEFT)) driverMode = false;
-  else if(simp->mController.get_digital(pros::E_CONTROLLER_DIGITAL_LEFT)) driverMode = true;
-}
-
 void userControl::driveLoop(){
   while(true){
     intakeM();
     setBrakeMode();
-    setDriveMode();
-
-    if(driverMode) driveM();
-    else driveMA();
+    liftControl();
+    driveM();
 
     pros::Task::delay(20);
   }

@@ -25,9 +25,10 @@ void autonomousRoutine::run(int autoSelection) {
 }
 
 void autonomousRoutine::test(){
-  control->updateRollers(127);
-  pros::Task::delay(10000);
-  control->updateRollers(0);
+  control->updateTargetPos(10, 10, 0);
+  control->waitUntilSettled();
+  control->updateTargetPos(0, 0, 0);
+  control->waitUntilSettled();
   pros::Task::delay(1250);
 }
 

@@ -119,21 +119,12 @@ void autonomousControl::waitUntilDeg(float deg){
 }
 
 
-void autonomousControl::updateRollers(int pwr){ rollerPct = pwr; }
+void autonomousControl::updateRoller1(int pwr){ roller1Pct = pwr; }
+void autonomousControl::updateRoller2(int pwr){ roller2Pct = pwr; }
+void autonomousControl::updateRoller3(int pwr){ roller3Pct = pwr; }
+void autonomousControl::updateRoller4(int pwr){ roller4Pct = pwr; }
 
 void autonomousControl::shootingBall(){
-  if (shooting == true){
-    rollerPct = 40;
-
-    if ((prevShot == true) && (simp->limit.get_value() == false)){
-      ballsDeteced++;
-      if (ballsDeteced == ballsToShoot){
-        rollerPct = 0;
-        shooting = false;
-      }
-    }
-    prevShot = simp->limit.get_value();
-  }
 }
 
 void autonomousControl::odometryMove(bool oMove){ movAB_Enabled = oMove; }
@@ -171,10 +162,10 @@ void autonomousControl::countBalls(){
 }
 
 void autonomousControl::rollerMove(){
-  simp->roller1.move(rollerPct);
-  simp->roller2.move(rollerPct);
-  simp->roller3.move(rollerPct);
-  simp->roller4.move(rollerPct);
+  simp->roller1.move(roller1Pct);
+  simp->roller2.move(roller2Pct);
+  simp->roller3.move(roller3Pct);
+  simp->roller4.move(roller4Pct);
 }
 
 void autonomousControl::autoMain(){

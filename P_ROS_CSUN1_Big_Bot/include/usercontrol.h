@@ -19,26 +19,19 @@ class userControl{
     /// Constructor for the class \ref userControl.
     ///
     /// This constructor will create an instance of the class \ref userControl.
-    /// It will select starting driver mode based on the value of dM.
     /// @param *robot Pointer to an instance of \ref robotChasis object.
-    /// @param dM Boolean that will run an absolute driver mode if set to false. 
-    userControl(robotChasis *robot, bool dM);
+    userControl(robotChasis *robot);
 
   private:
     robotChasis *simp;
-    bool driverMode;
-    bool flyWheelOn = false;
-    bool flyLastPress = false;
     int a3, a4, a1;
-    int flyWheelPow;
-    bool flySpeedToggle = false;
-    bool flyFast = true;
+    pros::c::optical_rgb_s_t rgb_value2, rgb_value1;
 
-    void setDriveMode();
     void driveM();
-    void driveMA();
     void intakeM();
     void storageRoller();
+    void liftControl();
     void setBrakeMode();
+    bool blue_inside = false;
 };
 

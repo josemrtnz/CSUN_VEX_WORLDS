@@ -26,11 +26,29 @@ class autonomousControl{
     /// @param pow Power in percentage units.
     void updateIntakePct(int pow);
 
-    /// Updates the target power for the mid rollers.
+    /// Updates the target power for the roller1.
     ///
-    /// This function will update the current power target for the mid rollers.
+    /// This function will update the current power target for the roller1.
     /// @param pow Power in percentage units.
-    void updateRollers(int pwr);
+    void updateRoller1(int pwr);
+
+    /// Updates the target power for the roller1.
+    ///
+    /// This function will update the current power target for the roller2.
+    /// @param pow Power in percentage units.
+    void updateRoller2(int pwr);
+
+    /// Updates the target power for the roller1.
+    ///
+    /// This function will update the current power target for the roller3.
+    /// @param pow Power in percentage units.
+    void updateRoller3(int pwr);
+
+    /// Updates the target power for the roller1.
+    ///
+    /// This function will update the current power target for the roller4.
+    /// @param pow Power in percentage units.
+    void updateRoller4(int pwr);
 
     /// Waits until the robot is full.
     ///
@@ -116,7 +134,10 @@ class autonomousControl{
     odometry *tracking;
 
     int intakePct = 0;
-    int rollerPct = 0;
+    int roller1Pct = 0;
+    int roller2Pct = 0;
+    int roller3Pct = 0;
+    int roller4Pct = 0;
     bool prevShot = 0;
     double rightEncoder;
     double leftEncoder;
