@@ -59,7 +59,19 @@ class autonomousControl{
     ///
     /// Waits until the robot detects that a number of specified balls has passed through the internal limit switch.
     /// @param ball Number of balls to wait for.
-    void waitUntilBalls(int ball);
+    void waitUntilIntakeBalls(int ball);
+
+    /// Waits until the robot has picked up a number of balls.
+    ///
+    /// Waits until the robot detects that a number of specified balls has passed through the internal limit switch.
+    /// @param ball Number of balls to wait for.
+    void waitUntilOuttakeBalls(int ball);
+
+    /// Updates all Rollers
+    ///
+    /// Updates all the rollers with specified power.
+    /// @param pow power to run all the rollers at.
+    void updateAllRollers(int pow);
 
     /// Waits until the robot is within a distance of the target.
     ///
@@ -144,7 +156,7 @@ class autonomousControl{
     double backEncoder;
     bool movAB_Enabled = true;
     bool shooting = false;
-    short ballsDeteced = 0;
+    short ballsDeteced = 1;
     short ballsToShoot = 0;
     int lowerBound = 0;
     double vectorD[2];

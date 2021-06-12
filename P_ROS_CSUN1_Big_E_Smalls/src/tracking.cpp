@@ -33,9 +33,9 @@ int odometry::updatePosition(){
     //Current time at start of loop
     loopTime = pros::millis();
 
-    currLeftEnc = simp->leftTracker.get_position()*100;
-    currRightEnc = simp->rightTracker.get_position()*100;
-    currBackEnc = simp->backTracker.get_position()*100;
+    currLeftEnc = simp->leftTracker.get_position()/100;
+    currRightEnc = simp->rightTracker.get_position()/100;
+    currBackEnc = simp->backTracker.get_position()/100;
 
     //The change in encoder values since last cycle in inches
     deltaL = (currLeftEnc - prevLeftEnc) * simp->getWheelCir()/360;
@@ -89,23 +89,28 @@ int odometry::updateScreen(){
     // Clears controller the screen.
   simp->mController.clear();
   double loopTime;
-
+  pros::c::optical_rgb_s_t rgb_value;
+  simp->colorSensor2.set_led_pwm(100);
+  simp->colorSensor1.set_led_pwm(100);
   while(true){
     loopTime = pros::millis();
-
+    rgb_value = simp->colorSensor1.get_rgb();
     // Prints the x and y coordinates and angle the bot is facing to the Controller.
     simp->mController.print(0, 0, "x: %.1fin y: %.1fin     ", xPos, yPos);
+    //simp->mController.print(0, 0, "G: %.0lf, Prox: %d   ", rgb_value.green, simp->colorSensor1.get_proximity());
     pros::Task::delay(50);
     simp->mController.print(1, 0, "Angle: %.1f°    ", angleD);
+    //simp->mController.print(1, 0, "R: %.0lf , B: %.0lf     ", rgb_value.red, rgb_value.blue);
     pros::Task::delay(50);
-    simp->mController.print(2, 0, "Line Value: %d     ", simp->line1.get_value());
+
+    //simp->mController.print(2, 0, "Line Value: %d     ", simp->line3.get_value());
+    //simp->mController.print(2, 0, "B: %.0lf, Prox: %d   ", rgb_value.blue, simp->colorSensor.get_proximity());
     pros::Task::delay(50);
 
     // Prints information about the bot to the console
     //printf("Distance: %.2lf Y Voltage: %.0f X Voltage: %.0f\n", vMag, yVoltage, xVoltage);
     printf("Tracking Wheels Angle: %0.f   IMU angle: %0.lf\n", angleD, simp->gyroM.get_heading());
     printf("rightTW: %.0lf, leftTW: %0.lf, backTW: %.0lf\n", simp->rightTracker.get_position()*100, simp->leftTracker.get_position()*100, simp->backTracker.get_position()*100);
-    printf("Flywheel RPM: %.1lf, Flywheel Voltage: %.0lf\n\n\n", simp->flyOuttake.get_actual_velocity(), simp->flyOuttake.get_voltage());
     //printf("%.0lf, %.0lf, %.0lf \n", Brain.Timer.time(msec), flyOuttake.velocity(rpm), flyOuttake.voltage(voltageUnits::mV));
 
     //Delays task so it does not hog all resources

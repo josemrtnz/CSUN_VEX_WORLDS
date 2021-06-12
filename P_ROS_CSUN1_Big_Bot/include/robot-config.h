@@ -96,17 +96,14 @@ class robotChasis{
     /// Back Tracker Rotation Sensor Instance
     pros::Rotation backTracker = pros::Rotation(14);
     
-    /// Limit Switch Sensor Instance
-    pros::ADIDigitalIn limit = pros::ADIDigitalIn('G');
+    /// Limit Switch Sensor Intake
+    pros::ADIDigitalIn limit1 = pros::ADIDigitalIn('A');
+
+    /// Limit Switch Sensor Outtake
+    pros::ADIDigitalIn limit2 = pros::ADIDigitalIn('H');
 
     /// IMU Sensor Instance
     pros::Imu gyroM = pros::Imu(13);
-
-    /// Line Tracker Instance Intake
-    pros::ADIAnalogIn line1 = pros::ADIAccelerometer('A');
-
-    /// Line Tracker Instance Outtake
-    pros::ADIAnalogIn line2 = pros::ADIAccelerometer('B');
 
     /// Line Tracker Instance Outtake2
     pros::ADIAnalogIn line3 = pros::ADIAccelerometer('C');

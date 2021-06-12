@@ -78,39 +78,11 @@ void autonomousControl::updateTargetPos(float x, float y, int angleO){
 
 void autonomousControl::updateIntakePct(int pow){ intakePct = pow; }
 
-void autonomousControl::updateFlyTBH(){
-
-  flyError = flyWheelRPM - simp->flyOuttake.get_actual_velocity();
-  flyVoltage += flykI*flyError;
-
-  // Clip
-  if (flyVoltage > 12000) flyVoltage = 12000;
-  else if (flyVoltage < lowerBound) flyVoltage = lowerBound;
-
-  // Zero crossing
-  if (std::signbit(flyError) != std::signbit(flyLastError)){
-    if( firstCross ){
-      flyVoltage = flyApprox;
-      firstCross = false;
-    } else flyVoltage = 0.5 * (flyVoltage + flyZero);
-    flyZero = flyVoltage;
-  }
-  flyLastError = flyError;
-}
-
 void autonomousControl::intakeMove(){
   simp->leftIntake.move(intakePct);
   simp->rightIntake.move(intakePct);
 }
 
-void autonomousControl::flyMove(){
-  updateFlyTBH();
-  simp->flyOuttake.move_voltage(flyVoltage);
-}
-
-void autonomousControl::rollerMove(){ 
-  simp->rollerIntake.move(rollerPct); 
-  }
 
 void autonomousControl::waitUntilSettled(){
   pros::Task::delay(100);
@@ -146,70 +118,16 @@ void autonomousControl::waitUntilDeg(float deg){
   }
 }
 
-void autonomousControl::updateFly(int rpm){
-  flyApprox = 10000;
-  flyError = 0;
-  flyLastError = 0;
-  flyVoltage = 0;
-  flyZero = 8000;
-  lowerBound = 5000;
-  firstCross = true;
-  flyWheelRPM = rpm;
-}
 
-void autonomousControl::stopFly(){
-  flyApprox = 0;
-  flyError = 0;
-  flyLastError = 0;
-  flyVoltage = 0;
-  flyZero = 0;
-  lowerBound = 0;
-  firstCross = true;
-  flyWheelRPM = 0;
-}
-
-void autonomousControl::updateRoller(int pwr){ rollerPct = pwr; }
-
-void autonomousControl::shootBall(int balls){
-  ballsDeteced = 0;
-  ballsToShoot = balls;
-  shooting = true;
-}
+void autonomousControl::updateRoller1(int pwr){ roller1Pct = pwr; }
+void autonomousControl::updateRoller2(int pwr){ roller2Pct = pwr; }
+void autonomousControl::updateRoller3(int pwr){ roller3Pct = pwr; }
+void autonomousControl::updateRoller4(int pwr){ roller4Pct = pwr; }
 
 void autonomousControl::shootingBall(){
-  if (shooting == true){
-    rollerPct = 40;
-
-    if ((prevShot == true) && (simp->limit.get_value() == false)){
-      ballsDeteced++;
-      if (ballsDeteced == ballsToShoot){
-        rollerPct = 0;
-        shooting = false;
-      }
-    }
-    prevShot = simp->limit.get_value();
-  }
 }
 
 void autonomousControl::odometryMove(bool oMove){ movAB_Enabled = oMove; }
-
-void autonomousControl::moveVision(){
-  updateVisionPos();
-
-  switch(visionStatus){
-    case 1:
-      turnVision();
-      break;
-    case 2:
-      strafeVision();
-      break;
-    case 3:
-      forwardVision();
-      break;
-    default:
-      break;
-  }
-}
 
 void autonomousControl::turnVision(){
   float angleVoltage = updatePID(&turnPID);
@@ -231,9 +149,6 @@ void autonomousControl::driveM(double a3, double a4, double a1){
   simp->backLeft.move_voltage(-a3 + a4 - a1);
 }
 
-void autonomousControl::updateVisionPos(){
-}
-
 void autonomousControl::visionTowerAlign(int angDeg){
 }
 
@@ -246,6 +161,13 @@ void autonomousControl::countBalls(){
   oBalls_prev = oBalls;
 }
 
+void autonomousControl::rollerMove(){
+  simp->roller1.move(roller1Pct);
+  simp->roller2.move(roller2Pct);
+  simp->roller3.move(roller3Pct);
+  simp->roller4.move(roller4Pct);
+}
+
 void autonomousControl::autoMain(){
   simp->set_drive_break_type(pros::E_MOTOR_BRAKE_COAST);
 
@@ -255,7 +177,6 @@ void autonomousControl::autoMain(){
     intakeMove();
     countBalls();
     rollerMove();
-    flyMove();
     pros::Task::delay(20);
   }
 }
