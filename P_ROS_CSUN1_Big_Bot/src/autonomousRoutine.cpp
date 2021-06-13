@@ -37,11 +37,11 @@ void autonomousRoutine::test(){
 }
 
 void autonomousRoutine::odometryOnlyAuto(){
-  control->updateTargetPos(0, 15, 90);
+  control->updateTargetPos(0, 10, 90);
   control->waitUntilDistance(1);
-  control->updateTargetPos(-10, 15, 180);
+  control->updateTargetPos(-12, 10, 180);
   control->waitUntilDeg(1);
-  control->updateTargetPos(-12, 1, 180);
+  control->updateTargetPos(-13, 1, 180);
   control->waitUntilDistance(1);
   control->updateAllRollers(127);
   control->waitUntilOuttakeBalls(0);

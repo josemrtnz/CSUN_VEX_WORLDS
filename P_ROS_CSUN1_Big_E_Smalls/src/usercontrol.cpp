@@ -15,7 +15,13 @@ void userControl::setBrakeMode(){
 }
 
 void userControl::intakeM(){
-  
+  if(simp->mController.get_digital(pros::E_CONTROLLER_DIGITAL_L2)){
+    simp->leftIntake.move(127);
+    simp->rightIntake.move(127);
+  } else {
+    simp->leftIntake.move(0);
+    simp->rightIntake.move(0);
+  }
 }
 
 void userControl::liftControl(){
