@@ -58,14 +58,9 @@ class autonomousControl{
     /// Waits until the robot has picked up a number of balls.
     ///
     /// Waits until the robot detects that a number of specified balls has passed through the internal limit switch.
-    /// @param ball Number of balls to wait for.
-    void waitUntilIntakeBalls(int ball);
-
-    /// Waits until the robot has picked up a number of balls.
-    ///
-    /// Waits until the robot detects that a number of specified balls has passed through the internal limit switch.
-    /// @param ball Number of balls to wait for.
-    void waitUntilOuttakeBalls(int ball);
+    /// @param ball_i Number of balls to wait intaken.
+    /// @param ball_o Number of balls to wait outtaken.
+    void waitUntilBalls(int ball_i, int ball_o);
 
     /// Updates all Rollers
     ///
@@ -150,36 +145,26 @@ class autonomousControl{
     int roller2Pct = 0;
     int roller3Pct = 0;
     int roller4Pct = 0;
-    bool prevShot = 0;
     double rightEncoder;
     double leftEncoder;
     double backEncoder;
     bool movAB_Enabled = true;
-    bool shooting = false;
-    short ballsDeteced = 1;
-    short ballsToShoot = 0;
-    int lowerBound = 0;
     double vectorD[2];
     float vMag;
-    int nBalls = 0;
     bool iBalls_prev = false;
     bool oBalls_prev = false;
+    int balls_intaken, balls_outtaken;
     double angleVoltage;
     
 
     void moveDrive(float x, float y, float turn);
     void odometryMove(bool oMove);
-    void countBalls();
-    void turnVision();
-    void forwardVision();
-    void strafeVision();
     float averageRPM();
     float updatePID(PIDSettings *good);
     int turnCap(float distanceMag);
     void movAB();
     void intakeMove();
     void rollerMove();
-    void shootingBall();
     void updateCurrPos();
     void driveM(double a3, double a4, double a1);
 };

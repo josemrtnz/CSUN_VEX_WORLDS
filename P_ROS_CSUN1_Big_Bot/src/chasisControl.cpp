@@ -101,19 +101,23 @@ void autonomousControl::waitUntilDistance(float dis){
   }
 }
 
-void autonomousControl::waitUntilIntakeBalls(int ball){
-  pros::Task::delay(100);
-   while(ballsDeteced <= ball){
-     pros::Task::delay(20);
-   }
+void autonomousControl::waitUntilBalls(int ball_i, int ball_o){
+  balls_intaken = 0;
+  balls_outtaken = 0;
+  bool iballs = false;
+  bool oballs = false;
+
+  while((balls_intaken >= ball_i) && (balls_outtaken >= ball_o)){
+    iballs = simp->limit1.get_value();
+    oballs = simp->limit2.get_value();
+    if(iballs && !iBalls_prev) balls_intaken++;
+    if(oballs && !oBalls_prev) balls_outtaken++;
+    iBalls_prev = iballs;
+    oBalls_prev = oballs;
+    pros::Task::delay(20);
+  }
 }
 
-void autonomousControl::waitUntilOuttakeBalls(int ball){
-   pros::Task::delay(100);
-   while(ballsDeteced >= ball){
-     pros::Task::delay(20);
-   }
-}
 
 void autonomousControl::waitUntilDeg(float deg){
   pros::Task::delay(100);
@@ -128,8 +132,6 @@ void autonomousControl::updateRoller2(int pwr){ roller2Pct = pwr; }
 void autonomousControl::updateRoller3(int pwr){ roller3Pct = pwr; }
 void autonomousControl::updateRoller4(int pwr){ roller4Pct = pwr; }
 
-void autonomousControl::shootingBall(){
-}
 
 void autonomousControl::updateAllRollers(int pow){
   updateRoller1(pow);
@@ -140,19 +142,6 @@ void autonomousControl::updateAllRollers(int pow){
 
 void autonomousControl::odometryMove(bool oMove){ movAB_Enabled = oMove; }
 
-void autonomousControl::turnVision(){
-  float angleVoltage = updatePID(&turnPID);
-
-  if(angleVoltage>12000) angleVoltage = 12000;
-  else if(angleVoltage<-12000) angleVoltage = -12000;
-
-  driveM(0, 0, angleVoltage);
-}
-
-void autonomousControl::strafeVision(){}
-
-void autonomousControl::forwardVision(){}
-
 void autonomousControl::driveM(double a3, double a4, double a1){
   simp->frontRight.move_voltage(a3 - a4 - a1);
   simp->frontLeft.move_voltage(-a3 - a4 - a1);
@@ -161,13 +150,6 @@ void autonomousControl::driveM(double a3, double a4, double a1){
 }
 
 void autonomousControl::visionTowerAlign(int angDeg){
-}
-
-void autonomousControl::countBalls(){
-  bool iballs = simp->limit1.get_value();
-  bool oballs = simp->limit2.get_value();
-  if(iballs && (!iBalls_prev)) ballsDeteced += 1;
-  if(oballs && (!oBalls_prev)) ballsDeteced += -1;
 }
 
 void autonomousControl::rollerMove(){
@@ -182,9 +164,7 @@ void autonomousControl::autoMain(){
 
   while(true){
     movAB();
-    shootingBall();
     intakeMove();
-    countBalls();
     rollerMove();
     pros::Task::delay(20);
   }

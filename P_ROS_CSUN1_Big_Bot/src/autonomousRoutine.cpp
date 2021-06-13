@@ -44,7 +44,7 @@ void autonomousRoutine::odometryOnlyAuto(){
   control->updateTargetPos(-13, 1, 180);
   control->waitUntilDistance(1);
   control->updateAllRollers(127);
-  control->waitUntilOuttakeBalls(0);
+  control->waitUntilBalls(0,1);
   control->updateAllRollers(0);
   pros::Task::delay(1000);
 }
