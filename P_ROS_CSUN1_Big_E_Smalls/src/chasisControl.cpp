@@ -153,19 +153,11 @@ void autonomousControl::visionTowerAlign(int angDeg){
 }
 
 void autonomousControl::countBalls(){
-  bool iBalls = (simp->line1.get_value()>INTAKE_LINE) ? false : true;
-  bool oBalls = (simp->line2.get_value()>OUTTAKE_LINE) ? false : true;
-  if(iBalls_prev == true && iBalls == false) nBalls++;
-  if(oBalls_prev == true && oBalls == false) nBalls--;
-  iBalls_prev = iBalls;
-  oBalls_prev = oBalls;
 }
 
 void autonomousControl::rollerMove(){
   simp->roller1.move(roller1Pct);
   simp->roller2.move(roller2Pct);
-  simp->roller3.move(roller3Pct);
-  simp->roller4.move(roller4Pct);
 }
 
 void autonomousControl::autoMain(){

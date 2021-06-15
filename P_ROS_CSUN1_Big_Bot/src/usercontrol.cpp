@@ -15,7 +15,16 @@ void userControl::setBrakeMode(){
 }
 
 void userControl::intakeM(){
-  
+  if(simp->mController.get_digital(pros::E_CONTROLLER_DIGITAL_L2)) {
+    simp->leftIntake.move(127);
+    simp->rightIntake.move(127);
+  } else if(simp->mController.get_digital(pros::E_CONTROLLER_DIGITAL_L1)){
+    simp->leftIntake.move(-127);
+    simp->rightIntake.move(-127);
+  } else {
+    simp->leftIntake.move(0);
+    simp->rightIntake.move(0);
+  }
 }
 
 void userControl::liftControl(){
@@ -50,16 +59,19 @@ void userControl::liftControl(){
     simp->roller2.move(-127);
     simp->roller3.move(-127);
     simp->roller4.move(-127);
-  } else if(simp->mController.get_digital(pros::E_CONTROLLER_DIGITAL_L1)){
-    simp->roller1.move(127);
-    simp->roller2.move(-127);
-    simp->roller3.move(40);
-    simp->roller4.move(0);
   } else {
     simp->roller1.move(0);
     simp->roller2.move(0);
     simp->roller3.move(0);
     simp->roller4.move(0);
+  }
+}
+
+void userControl::expandIntake(){
+  if(simp->mController.get_digital(pros::E_CONTROLLER_DIGITAL_UP)){
+    simp->intakeP.set_value(1);
+  } else if(simp->mController.get_digital(pros::E_CONTROLLER_DIGITAL_DOWN)){
+    simp->intakeP.set_value(0);
   }
 }
 
@@ -85,6 +97,7 @@ void userControl::driveLoop(){
   while(true){
     intakeM();
     setBrakeMode();
+    expandIntake();
     liftControl();
     driveM();
 

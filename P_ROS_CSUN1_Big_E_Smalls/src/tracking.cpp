@@ -89,12 +89,8 @@ int odometry::updateScreen(){
     // Clears controller the screen.
   simp->mController.clear();
   double loopTime;
-  pros::c::optical_rgb_s_t rgb_value;
-  simp->colorSensor2.set_led_pwm(100);
-  simp->colorSensor1.set_led_pwm(100);
   while(true){
     loopTime = pros::millis();
-    rgb_value = simp->colorSensor1.get_rgb();
     // Prints the x and y coordinates and angle the bot is facing to the Controller.
     simp->mController.print(0, 0, "x: %.1fin y: %.1fin     ", xPos, yPos);
     //simp->mController.print(0, 0, "G: %.0lf, Prox: %d   ", rgb_value.green, simp->colorSensor1.get_proximity());

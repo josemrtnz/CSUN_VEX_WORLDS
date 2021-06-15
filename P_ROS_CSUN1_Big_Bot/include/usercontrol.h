@@ -31,6 +31,7 @@ class userControl{
     void intakeM();
     void storageRoller();
     void liftControl();
+    void expandIntake();
     void setBrakeMode();
     bool blue_inside = false;
 };

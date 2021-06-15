@@ -7,7 +7,7 @@
 #define TEST 0
 #define SKILLS 1
 
-robotChasis simp = robotChasis(3.0, 7.0, 7.0,7.0);
+robotChasis simp = robotChasis(3.0, 6.8, 6.8,7.0);
 odometry tracker = odometry(&simp, 0, 0, 0);
 autonomousControl autoChasis = autonomousControl(&simp, &tracker);
 autonomousRoutine autoRoutine = autonomousRoutine(&autoChasis);

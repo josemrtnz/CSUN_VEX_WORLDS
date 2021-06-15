@@ -79,22 +79,27 @@ class autonomousControl{
     /// Waits until the rpm of the drive motors falls below 2.
     void waitUntilSettled();
 
+    ///
+    ///
+    /// @param blue_balls Number of blue balls to cycle out.
+    /// @param ball_i Number of balls to intake.
+    /// @param ball_o Number of balls to outtake.
+    void cycle_blue(int blue_balls, int ball_i, int ball_o, int timeout);
+
     /// Waits until the robot's orientation is within the target.
     ///
     /// Waits until the robot's orrientation is within the specified angular distance of the target orientation.
     /// @param deg Degrees to wait until it reaches the target.
     void waitUntilDeg(float deg);
 
+    void openIntake();
+    void closeIntake();
+
     /// Main loop for the autonomous period.
     ///
     /// This function has a while loop that will always be running during the autonmous period.
     /// The while loop will call functions to move the drive to the target position and any other motors will be set to their target. 
     void autoMain();
-
-    /// N/A
-    /// 
-    /// N/A
-    void visionTowerAlign(int angDeg);
 
     /// Sets PID constants for the robot in autonomous control.
     ///
@@ -153,8 +158,11 @@ class autonomousControl{
     float vMag;
     bool iBalls_prev = false;
     bool oBalls_prev = false;
-    int balls_intaken, balls_outtaken;
+    bool fprevBall, fcurrBall;
+    int balls_intaken, balls_outtaken, blue_balls_outtaken;
     double angleVoltage;
+    pros::c::optical_rgb_s_t rgb_value2, rgb_value1;
+    bool blue_inside = false;
     
 
     void moveDrive(float x, float y, float turn);

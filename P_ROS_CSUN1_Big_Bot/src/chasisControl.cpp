@@ -107,7 +107,7 @@ void autonomousControl::waitUntilBalls(int ball_i, int ball_o){
   bool iballs = false;
   bool oballs = false;
 
-  while((balls_intaken >= ball_i) && (balls_outtaken >= ball_o)){
+  while((balls_intaken < ball_i) || (balls_outtaken < ball_o)){
     iballs = simp->limit1.get_value();
     oballs = simp->limit2.get_value();
     if(iballs && !iBalls_prev) balls_intaken++;
@@ -116,8 +116,76 @@ void autonomousControl::waitUntilBalls(int ball_i, int ball_o){
     oBalls_prev = oballs;
     pros::Task::delay(20);
   }
+  pros::Task::delay(500);
 }
 
+void autonomousControl::openIntake(){
+  simp->intakeP.set_value(1);
+}
+
+void autonomousControl::closeIntake(){
+  simp->intakeP.set_value(0);
+}
+
+void autonomousControl::cycle_blue(int blue_balls, int ball_i, int ball_o, int timeout){
+  balls_intaken = 0;
+  balls_outtaken = 0;
+  blue_balls_outtaken = 0;
+  fprevBall = false;
+  bool iballs = false;
+  bool oballs = false;
+  bool blue_shoot = false;
+  std::uint32_t time = pros::millis();
+
+  updateAllRollers(100);
+  updateIntakePct(127);
+
+  while(((balls_intaken < ball_i) || (balls_outtaken < ball_o || (blue_balls_outtaken < blue_balls))) && ((time + timeout) > pros::millis())){
+    oballs = simp->limit2.get_value();
+    if(simp->line3.get_value() < 2850) fcurrBall = true;
+    else fcurrBall = false;
+    if(simp->colorSensor1.get_proximity() > 200) iballs = true;
+    else iballs = false;
+    if(iballs && !iBalls_prev) balls_intaken++;
+    if(oballs && !oBalls_prev) balls_outtaken++;
+    iBalls_prev = iballs;
+    oBalls_prev = oballs;
+    blue_shoot = false;
+
+    rgb_value1 = simp->colorSensor1.get_rgb();
+    rgb_value2 = simp->colorSensor2.get_rgb();
+
+    if((rgb_value1.blue > rgb_value1.red) && (simp->colorSensor1.get_proximity() > 120)) blue_inside = true;
+    if(((rgb_value2.blue > rgb_value2.red) && (simp->colorSensor2.get_proximity() > 120))){
+      updateRoller1(60);
+      updateRoller2(-127);
+      updateRoller3(60);
+      blue_inside = false;
+      blue_shoot = true;
+      if(fcurrBall && !fprevBall) {
+        blue_balls_outtaken++;
+      }
+  } 
+  if(blue_inside){
+    updateRoller1(60);
+    updateRoller2(60);
+    updateRoller3(60);
+  } else if(!blue_shoot){
+    updateRoller1(100);
+    updateRoller2(100);
+    updateRoller3(100);
+  }
+
+  if(balls_intaken >= ball_i) updateIntakePct(0);
+  if(balls_outtaken >= ball_o) updateRoller4(20);
+  fprevBall = fcurrBall;
+  pros::Task::delay(20);
+  }
+
+  pros::Task::delay(500);
+  updateAllRollers(0);
+  updateIntakePct(0);
+}
 
 void autonomousControl::waitUntilDeg(float deg){
   pros::Task::delay(100);
@@ -147,9 +215,6 @@ void autonomousControl::driveM(double a3, double a4, double a1){
   simp->frontLeft.move_voltage(-a3 - a4 - a1);
   simp->backRight.move_voltage(a3 + a4 - a1);
   simp->backLeft.move_voltage(-a3 + a4 - a1);
-}
-
-void autonomousControl::visionTowerAlign(int angDeg){
 }
 
 void autonomousControl::rollerMove(){

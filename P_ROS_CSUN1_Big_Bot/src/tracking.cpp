@@ -103,7 +103,7 @@ int odometry::updateScreen(){
     //simp->mController.print(1, 0, "R: %.0lf , B: %.0lf     ", rgb_value.red, rgb_value.blue);
     pros::Task::delay(50);
 
-    //simp->mController.print(2, 0, "Line Value: %d     ", simp->line3.get_value());
+    simp->mController.print(2, 0, "Line Value: %d     ", simp->line3.get_value());
     //simp->mController.print(2, 0, "B: %.0lf, Prox: %d   ", rgb_value.blue, simp->colorSensor.get_proximity());
     pros::Task::delay(50);
 

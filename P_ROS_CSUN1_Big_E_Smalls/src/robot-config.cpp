@@ -9,8 +9,6 @@ robotChasis::robotChasis( float wD, float tcL, float tcR, float tcB){
 
   roller1.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
   roller2.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
-  roller3.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
-  roller4.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
   
   rightTracker.reset_position();
   leftTracker.reset_position();

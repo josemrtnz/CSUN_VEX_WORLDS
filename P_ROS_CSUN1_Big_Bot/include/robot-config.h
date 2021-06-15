@@ -67,10 +67,10 @@ class robotChasis{
     pros::Motor backRight = pros::Motor(17, pros::E_MOTOR_GEARSET_18, true);
 
     /// Left Intake Motor Instance
-    pros::Motor leftIntake = pros::Motor(13, pros::E_MOTOR_GEARSET_18, true);
+    pros::Motor leftIntake = pros::Motor(8, pros::E_MOTOR_GEARSET_18, false);
 
     /// Right Intake Motor Instance
-    pros::Motor rightIntake = pros::Motor(13, pros::E_MOTOR_GEARSET_18, true);
+    pros::Motor rightIntake = pros::Motor(16, pros::E_MOTOR_GEARSET_18, true);
 
     /// Roller Motor Instance
     pros::Motor roller1 = pros::Motor(20, pros::E_MOTOR_GEARSET_06, false);
@@ -87,6 +87,10 @@ class robotChasis{
     //encoder leftTracker = encoder(Brain.ThreeWirePort.E);
     //encoder rightTracker = encoder(Brain.ThreeWirePort.A);
     //encoder backTracker = encoder(Brain.ThreeWirePort.C);
+
+    ///Pneumatics Device for expanding and contracting the intake.
+    pros::ADIDigitalOut intakeP = pros::ADIDigitalOut('G');
+
     /// Left Tracker Rotation Sensor Instance
     pros::Rotation leftTracker = pros::Rotation(11); //true
 

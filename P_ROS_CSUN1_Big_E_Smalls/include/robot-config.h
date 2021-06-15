@@ -76,13 +76,7 @@ class robotChasis{
     pros::Motor roller1 = pros::Motor(1, pros::E_MOTOR_GEARSET_18, false);
 
     /// Roller Motor Instance
-    pros::Motor roller2 = pros::Motor(2, pros::E_MOTOR_GEARSET_06, false);
-
-    /// Roller Motor Instance
-    pros::Motor roller3 = pros::Motor(2, pros::E_MOTOR_GEARSET_06, false);
-
-    /// Roller Motor Instance
-    pros::Motor roller4 = pros::Motor(2, pros::E_MOTOR_GEARSET_18, false);
+    pros::Motor roller2 = pros::Motor(14, pros::E_MOTOR_GEARSET_18, false);
 
     //encoder leftTracker = encoder(Brain.ThreeWirePort.E);
     //encoder rightTracker = encoder(Brain.ThreeWirePort.A);
@@ -101,22 +95,6 @@ class robotChasis{
 
     /// IMU Sensor Instance
     pros::Imu gyroM = pros::Imu(2);
-
-    /// Line Tracker Instance Intake
-    pros::ADIAnalogIn line1 = pros::ADIAccelerometer('A');
-
-    /// Line Tracker Instance Outtake
-    pros::ADIAnalogIn line2 = pros::ADIAccelerometer('B');
-
-    /// Line Tracker Instance Outtake2
-    pros::ADIAnalogIn line3 = pros::ADIAccelerometer('C');
-
-    /// Color Sensor2
-    pros::Optical colorSensor2 = pros::Optical(2);
-
-    /// Color Sensor1
-    pros::Optical colorSensor1 = pros::Optical(2);
-
 
     /// Sets the brake type for the drive motors.
     ///

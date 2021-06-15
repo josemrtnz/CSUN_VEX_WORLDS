@@ -25,47 +25,15 @@ void userControl::intakeM(){
 }
 
 void userControl::liftControl(){
-  rgb_value2 = simp->colorSensor2.get_rgb();
-  rgb_value1 = simp->colorSensor1.get_rgb();
-  if((rgb_value1.blue > rgb_value1.red) && (simp->colorSensor1.get_proximity() > 120)) blue_inside =  true;
   if(simp->mController.get_digital(pros::E_CONTROLLER_DIGITAL_R1)){
-    if((rgb_value2.blue > rgb_value2.red) && (simp->colorSensor2.get_proximity() > 120)){
-      simp->roller1.move(60);
-      simp->roller2.move(-127);
-      simp->roller3.move(60);
-      simp->roller4.move(80);
-      while(!((simp->line3.get_value() < 2850) || (simp->mController.get_digital(pros::E_CONTROLLER_DIGITAL_B)))){
-        pros::delay(20);
-      }
-      blue_inside = false;
-    } else {
-      if(blue_inside){
-        simp->roller1.move(60); //65
-        simp->roller2.move(60); //65
-        simp->roller3.move(60); //65
-        simp->roller4.move(100); //100
-      } else {
-        simp->roller1.move(100);
-        simp->roller2.move(100);
-        simp->roller3.move(100); 
-        simp->roller4.move(100);
-      }
-    }
+    simp->roller1.move(127);
+    simp->roller2.move(127);
   } else if(simp->mController.get_digital(pros::E_CONTROLLER_DIGITAL_R2)){
     simp->roller1.move(-127);
     simp->roller2.move(-127);
-    simp->roller3.move(-127);
-    simp->roller4.move(-127);
-  } else if(simp->mController.get_digital(pros::E_CONTROLLER_DIGITAL_L1)){
-    simp->roller1.move(127);
-    simp->roller2.move(-127);
-    simp->roller3.move(40);
-    simp->roller4.move(0);
   } else {
     simp->roller1.move(0);
     simp->roller2.move(0);
-    simp->roller3.move(0);
-    simp->roller4.move(0);
   }
 }
 

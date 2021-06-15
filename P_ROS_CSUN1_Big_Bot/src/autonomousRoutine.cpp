@@ -25,27 +25,23 @@ void autonomousRoutine::run(int autoSelection) {
 }
 
 void autonomousRoutine::test(){
-  control->updateTargetPos(0, 0, 90);
-  control->waitUntilDeg(5);
-  control->updateTargetPos(0, 0, 0);
-  control->waitUntilDeg(5);
-  control->updateTargetPos(0, 0, 90);
-  control->waitUntilDeg(5);
-  control->updateTargetPos(0, 0, 0);
-  control->waitUntilDeg(5);
+  control->cycle_blue(2, 0, 1, 2500);
   pros::Task::delay(1250);
 }
 
 void autonomousRoutine::odometryOnlyAuto(){
+  control->closeIntake();
   control->updateTargetPos(0, 10, 90);
   control->waitUntilDistance(1);
-  control->updateTargetPos(-12, 10, 180);
+  control->updateTargetPos(13, 10, 180);
   control->waitUntilDeg(1);
-  control->updateTargetPos(-13, 1, 180);
+  control->updateTargetPos(13, 2.5, 180);
+  control->waitUntilDistance(2);
+  control->cycle_blue(1, 1, 1, 5000);
+  control->updateTargetPos(13, 10, 180);
   control->waitUntilDistance(1);
-  control->updateAllRollers(127);
-  control->waitUntilBalls(0,1);
-  control->updateAllRollers(0);
+  control->updateTargetPos(35, 10, 225);
+  control->waitUntilSettled();
   pros::Task::delay(1000);
 }
 
