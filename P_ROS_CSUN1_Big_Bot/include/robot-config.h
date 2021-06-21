@@ -67,7 +67,7 @@ class robotChasis{
     pros::Motor backRight = pros::Motor(17, pros::E_MOTOR_GEARSET_18, true);
 
     /// Left Intake Motor Instance
-    pros::Motor leftIntake = pros::Motor(8, pros::E_MOTOR_GEARSET_18, false);
+    pros::Motor leftIntake = pros::Motor(7, pros::E_MOTOR_GEARSET_18, false);
 
     /// Right Intake Motor Instance
     pros::Motor rightIntake = pros::Motor(16, pros::E_MOTOR_GEARSET_18, true);

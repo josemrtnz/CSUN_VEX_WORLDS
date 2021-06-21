@@ -25,6 +25,13 @@ int odometry::updatePosition(){
   double currLeftEnc = 0;
   double currRightEnc = 0;
   double currBackEnc = 0;
+  float currV = 0;
+  float prevV = 0;
+  float prevP = 0;
+  float currA = 0;
+  float prevA = 0;
+  float jerk = 0;
+
   
 
   // This loop will update the x and y position and angle the bot is facing
@@ -72,15 +79,25 @@ int odometry::updatePosition(){
     double cosP = cos(p);
     double sinP = sin(p);
 
+    prevP = yPos;
+
     yPos += h*cosP;
     xPos += h*sinP;
 
     yPos += h2*(-sinP);
     xPos += h2*cosP;
+
+    currV = (yPos - prevP)*100; // Velocity in in/s
+    currA = (currV - prevV)*100; // Acceleration in in/s^2
+    jerk = (currA - prevA)*100; // Jerk in in/s^3
+    prevV = currV;
+    prevA = currA;
+
     angleR += a;
     angleD = angleR * (180/simp->getPI());
     //Delays task so it does not hog all resources
-    pros::Task::delay(10 - (pros::millis() - loopTime));
+    printf("%d, %.2f, %.2f, %.2f\n", pros::millis(), currV, currA, jerk);
+    pros::Task::delay(20 - (pros::millis() - loopTime));
   }
   return 1;
 }
@@ -98,23 +115,25 @@ int odometry::updateScreen(){
     // Prints the x and y coordinates and angle the bot is facing to the Controller.
     simp->mController.print(0, 0, "x: %.1fin y: %.1fin     ", xPos, yPos);
     //simp->mController.print(0, 0, "G: %.0lf, Prox: %d   ", rgb_value.green, simp->colorSensor1.get_proximity());
+    //simp->mController.print(0, 0, "FR: %.1f FL: %.1f      ", simp->frontRight.get_actual_velocity(), simp->frontLeft.get_actual_velocity());
     pros::Task::delay(50);
     simp->mController.print(1, 0, "Angle: %.1f°    ", angleD);
     //simp->mController.print(1, 0, "R: %.0lf , B: %.0lf     ", rgb_value.red, rgb_value.blue);
+    simp->mController.print(1, 0, "BR: %.1f BL: %.1f      ", simp->backRight.get_actual_velocity(), simp->backLeft.get_actual_velocity());
     pros::Task::delay(50);
 
-    simp->mController.print(2, 0, "Line Value: %d     ", simp->line3.get_value());
+    //simp->mController.print(2, 0, "Line Value: %d     ", simp->line3.get_value());
     //simp->mController.print(2, 0, "B: %.0lf, Prox: %d   ", rgb_value.blue, simp->colorSensor.get_proximity());
     pros::Task::delay(50);
 
     // Prints information about the bot to the console
     //printf("Distance: %.2lf Y Voltage: %.0f X Voltage: %.0f\n", vMag, yVoltage, xVoltage);
-    printf("Tracking Wheels Angle: %0.f   IMU angle: %0.lf\n", angleD, simp->gyroM.get_heading());
-    printf("rightTW: %.0lf, leftTW: %0.lf, backTW: %.0lf\n", simp->rightTracker.get_position()*100, simp->leftTracker.get_position()*100, simp->backTracker.get_position()*100);
+    //printf("Tracking Wheels Angle: %0.f   IMU angle: %0.lf\n", angleD, simp->gyroM.get_heading());
+    //printf("rightTW: %.0lf, leftTW: %0.lf, backTW: %.0lf\n", simp->rightTracker.get_position()*100, simp->leftTracker.get_position()*100, simp->backTracker.get_position()*100);
     //printf("%.0lf, %.0lf, %.0lf \n", Brain.Timer.time(msec), flyOuttake.velocity(rpm), flyOuttake.voltage(voltageUnits::mV));
 
     //Delays task so it does not hog all resources
-    pros::Task::delay(200 - (pros::millis()-loopTime));
+    pros::Task::delay(150 - (pros::millis()-loopTime));
   }
 
   return 1;
