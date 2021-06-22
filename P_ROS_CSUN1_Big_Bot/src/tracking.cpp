@@ -119,10 +119,10 @@ int odometry::updateScreen(){
     pros::Task::delay(50);
     simp->mController.print(1, 0, "Angle: %.1f°    ", angleD);
     //simp->mController.print(1, 0, "R: %.0lf , B: %.0lf     ", rgb_value.red, rgb_value.blue);
-    simp->mController.print(1, 0, "BR: %.1f BL: %.1f      ", simp->backRight.get_actual_velocity(), simp->backLeft.get_actual_velocity());
+    //simp->mController.print(1, 0, "BR: %.1f BL: %.1f      ", simp->backRight.get_actual_velocity(), simp->backLeft.get_actual_velocity());
     pros::Task::delay(50);
 
-    //simp->mController.print(2, 0, "Line Value: %d     ", simp->line3.get_value());
+    simp->mController.print(2, 0, "Line Value: %d     ", simp->line2.get_value());
     //simp->mController.print(2, 0, "B: %.0lf, Prox: %d   ", rgb_value.blue, simp->colorSensor.get_proximity());
     pros::Task::delay(50);
 

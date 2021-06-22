@@ -59,7 +59,7 @@ void autonomous() {
 }
 
 void opcontrol() {
-  //autoRoutine.run(SKILLS);
+  autoRoutine.run(SKILLS);
 	startAuto.remove();
 	userControl driveJose = userControl(&simp);
   driveJose.driveLoop();

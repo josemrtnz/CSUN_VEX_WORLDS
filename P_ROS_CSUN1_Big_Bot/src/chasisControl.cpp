@@ -144,7 +144,7 @@ void autonomousControl::cycle_blue(int blue_balls, int ball_i, int ball_o, int t
     oballs = simp->limit2.get_value();
     if(simp->line3.get_value() < 2850) fcurrBall = true;
     else fcurrBall = false;
-    if(simp->colorSensor1.get_proximity() > 200) iballs = true;
+    if(simp->line2.get_value() < 2850) iballs = true;
     else iballs = false;
     if(iballs && !iBalls_prev) balls_intaken++;
     if(oballs && !oBalls_prev) balls_outtaken++;
@@ -157,9 +157,9 @@ void autonomousControl::cycle_blue(int blue_balls, int ball_i, int ball_o, int t
 
     if((rgb_value1.blue > rgb_value1.red) && (simp->colorSensor1.get_proximity() > 120)) blue_inside = true;
     if(((rgb_value2.blue > rgb_value2.red) && (simp->colorSensor2.get_proximity() > 120)) && (blue_balls_outtaken < blue_balls)){
-      updateRoller1(0);
+      updateRoller1(60);
       updateRoller2(-127);
-      updateRoller3(127);
+      updateRoller3(100);
       blue_inside = false;
       blue_shoot = true;
       if(fcurrBall && !fprevBall) {
@@ -176,7 +176,7 @@ void autonomousControl::cycle_blue(int blue_balls, int ball_i, int ball_o, int t
     updateRoller3(90);
   }
 
-  if(balls_intaken >= ball_i) updateIntakePct(-40);
+  if(balls_intaken >= ball_i) updateIntakePct(25);
   if(balls_outtaken >= ball_o) updateRoller4(-20);
   fprevBall = fcurrBall;
   pros::Task::delay(20);

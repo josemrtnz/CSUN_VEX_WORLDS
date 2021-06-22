@@ -110,7 +110,10 @@ class robotChasis{
     pros::Imu gyroM = pros::Imu(13);
 
     /// Line Tracker Instance Outtake2
-    pros::ADIAnalogIn line3 = pros::ADIAccelerometer('C');
+    pros::ADIAnalogIn line3 = pros::ADILineSensor('C');
+
+    /// Line Tracker Instance Outtake2
+    pros::ADIAnalogIn line2 = pros::ADILineSensor('B');
 
     /// Color Sensor2
     pros::Optical colorSensor2 = pros::Optical(3);
