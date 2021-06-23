@@ -91,24 +91,9 @@ void autonomousRoutine::blueSideAuto(){
   control->waitUntilDistance(1);
   control->updateTargetPos(-22, 12, 225);
   control->waitUntilDistance(1);
-  control->updateTargetPos(-37.5, -3, 225);
-  control->cycle_red(1, 3, 2, 5000);
-  control->updateRoller1(30);
-  control->updateRoller2(30);
-  control->updateRoller3(30);
-  control->updateRoller4(-30);
-  control->updateTargetPos(-24.5, 20, 300);
-  control->waitUntilDeg(2);
-  control->waitUntilDistance(1);
-  control->updateIntakePct(80);
-  control->cycle_red(1, 0, 0, 2000);
-  control->updateTargetPos(48, 20, 115);
-  control->updateIntakePct(100);
-  control->waitUntilDistance(1);
-  control->updateTargetPos(63, 11, 115);
-  control->waitUntilDistance(2);
-  control->cycle_red(1, 2, 2, 10000);
-  control->waitUntilSettled();
+  control->updateTargetPos(-38, -3.5, 225);
+  control->cycle_red(2, 4, 10, 5000);
+  control->updateTargetPos(-35, 0, 225);
   pros::Task::delay(5000);
 }
 

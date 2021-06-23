@@ -167,9 +167,9 @@ void autonomousControl::cycle_red(int red_balls, int ball_i, int ball_o, int tim
       }
   } 
   if(red_inside){
-    updateRoller1(50);
-    updateRoller2(50);
-    updateRoller3(50);
+    updateRoller1(60);
+    updateRoller2(60);
+    updateRoller3(60);
   } else if(!red_shoot){
     updateRoller1(90);
     updateRoller2(90);
