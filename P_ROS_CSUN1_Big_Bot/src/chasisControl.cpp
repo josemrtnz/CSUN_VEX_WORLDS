@@ -127,6 +127,66 @@ void autonomousControl::closeIntake(){
   simp->intakeP.set_value(0);
 }
 
+void autonomousControl::cycle_red(int red_balls, int ball_i, int ball_o, int timeout){
+  balls_intaken = 0;
+  balls_outtaken = 0;
+  red_balls_outtaken = 0;
+  fprevBall = false;
+  bool iballs = false;
+  bool oballs = false;
+  bool red_shoot = false;
+  std::uint32_t time = pros::millis();
+
+  updateAllRollers(100);
+  updateIntakePct(127);
+
+  while(((balls_intaken < ball_i) || (balls_outtaken < ball_o || (red_balls_outtaken < red_balls))) && ((time + timeout) > pros::millis())){
+    oballs = simp->limit2.get_value();
+    if(simp->line3.get_value() < 2850) fcurrBall = true;
+    else fcurrBall = false;
+    if(simp->line2.get_value() < 2850) iballs = true;
+    else iballs = false;
+    if(iballs && !iBalls_prev) balls_intaken++;
+    if(oballs && !oBalls_prev) balls_outtaken++;
+    iBalls_prev = iballs;
+    oBalls_prev = oballs;
+    red_shoot = false;
+
+    rgb_value1 = simp->colorSensor1.get_rgb();
+    rgb_value2 = simp->colorSensor2.get_rgb();
+
+    if((rgb_value1.red > rgb_value1.blue) && (simp->colorSensor1.get_proximity() > 120)) red_inside = true;
+    if(((rgb_value2.red > rgb_value2.blue) && (simp->colorSensor2.get_proximity() > 120)) && (red_balls_outtaken < red_balls)){
+      updateRoller1(60);
+      updateRoller2(-127);
+      updateRoller3(100);
+      red_inside = false;
+      red_shoot = true;
+      if(fcurrBall && !fprevBall) {
+        red_balls_outtaken++;
+      }
+  } 
+  if(red_inside){
+    updateRoller1(50);
+    updateRoller2(50);
+    updateRoller3(50);
+  } else if(!red_shoot){
+    updateRoller1(90);
+    updateRoller2(90);
+    updateRoller3(90);
+  }
+
+  if(balls_intaken >= ball_i) updateIntakePct(25);
+  if(balls_outtaken >= ball_o) updateRoller4(-20);
+  fprevBall = fcurrBall;
+  pros::Task::delay(20);
+  }
+
+  pros::Task::delay(500);
+  updateAllRollers(0);
+  updateIntakePct(0);
+}
+
 void autonomousControl::cycle_blue(int blue_balls, int ball_i, int ball_o, int timeout){
   balls_intaken = 0;
   balls_outtaken = 0;

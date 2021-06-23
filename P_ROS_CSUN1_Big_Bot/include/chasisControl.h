@@ -86,6 +86,13 @@ class autonomousControl{
     /// @param ball_o Number of balls to outtake.
     void cycle_blue(int blue_balls, int ball_i, int ball_o, int timeout);
 
+    ///
+    ///
+    /// @param red_balls Number of blue balls to cycle out.
+    /// @param ball_i Number of balls to intake.
+    /// @param ball_o Number of balls to outtake.
+    void cycle_red(int red_balls, int ball_i, int ball_o, int timeout);
+
     /// Waits until the robot's orientation is within the target.
     ///
     /// Waits until the robot's orrientation is within the specified angular distance of the target orientation.
@@ -159,10 +166,11 @@ class autonomousControl{
     bool iBalls_prev = false;
     bool oBalls_prev = false;
     bool fprevBall, fcurrBall;
-    int balls_intaken, balls_outtaken, blue_balls_outtaken;
+    int balls_intaken, balls_outtaken, blue_balls_outtaken, red_balls_outtaken;
     double angleVoltage;
     pros::c::optical_rgb_s_t rgb_value2, rgb_value1;
     bool blue_inside = false;
+    bool red_inside = false;
     
 
     void moveDrive(float x, float y, float turn);

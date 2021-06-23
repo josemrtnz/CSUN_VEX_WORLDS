@@ -24,7 +24,8 @@ class autonomousRoutine {
 
   private:
     autonomousControl *control;
-    void odometryOnlyAuto();
+    void redSideAuto();
+    void blueSideAuto();
     void test();
     void odometryVisionAuto();
 };
