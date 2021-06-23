@@ -5,7 +5,8 @@
 #include "usercontrol.h"
 
 #define TEST 0
-#define SKILLS 1
+#define RED_SIDE 1
+#define BLUE_SIDE 2
 
 robotChasis simp = robotChasis(3.118, 7.44, 7.44, 7.5625); //6.95
 odometry tracker = odometry(&simp, 0, 0, 0);
@@ -59,7 +60,7 @@ void autonomous() {
 }
 
 void opcontrol() {
-  autoRoutine.run(SKILLS);
+  autoRoutine.run(RED_SIDE);
 	startAuto.remove();
 	userControl driveJose = userControl(&simp);
   driveJose.driveLoop();
