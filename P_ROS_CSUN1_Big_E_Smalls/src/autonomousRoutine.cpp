@@ -13,10 +13,10 @@ void autonomousRoutine::run(int autoSelection) {
       test();
       break;
     case 1:
-      odometryOnlyAuto();
+      redSideAuto();
       break;
     case 2:
-      odometryVisionAuto();
+      blueSideAuto();
       break;
     default:
       printf("No Auto Selected!");
@@ -32,10 +32,10 @@ void autonomousRoutine::test(){
   pros::Task::delay(1250);
 }
 
-void autonomousRoutine::odometryOnlyAuto(){
+void autonomousRoutine::redSideAuto(){
 
 }
 
-void autonomousRoutine::odometryVisionAuto(){
+void autonomousRoutine::blueSideAuto(){
   
 }
