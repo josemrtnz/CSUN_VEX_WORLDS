@@ -109,6 +109,18 @@ void autonomousControl::waitUntilDistance(float dis){
 }
 
 void autonomousControl::waitUntilBalls(int ball){
+  int ballCount = 0;
+  bool currV = false;
+  bool prevV = false;
+
+  while(ballCount < ball){
+    if(simp->line1.get_value() < 2900) currV = true;
+    else currV = false;
+
+    if((currV && (!prevV))) ballCount++;
+    prevV = currV;
+    pros::Task::delay(20);
+  }
 }
 
 void autonomousControl::waitUntilDeg(float deg){
@@ -137,6 +149,7 @@ void autonomousControl::driveM(double a3, double a4, double a1){
 }
 
 void autonomousControl::countBalls(){
+
 }
 
 void autonomousControl::rollerMove(){
@@ -146,9 +159,9 @@ void autonomousControl::rollerMove(){
 
 void autonomousControl::deployRobot(){
   updateRollers(-127);
-  pros::Task::delay(2000);
+  pros::Task::delay(3000);
   updateIntakePct(127);
-  pros::Task::delay(2000);
+  pros::Task::delay(3000);
   updateIntakePct(0);
   updateRollers(0);
 }
