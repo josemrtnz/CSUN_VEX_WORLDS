@@ -18,6 +18,9 @@ void userControl::intakeM(){
   if(simp->mController.get_digital(pros::E_CONTROLLER_DIGITAL_L2)){
     simp->leftIntake.move(127);
     simp->rightIntake.move(127);
+  } else if(simp->mController.get_digital(pros::E_CONTROLLER_DIGITAL_L1)){
+    simp->leftIntake.move(-127);
+    simp->rightIntake.move(-127);
   } else {
     simp->leftIntake.move(0);
     simp->rightIntake.move(0);

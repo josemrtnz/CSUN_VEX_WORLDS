@@ -119,28 +119,15 @@ void autonomousControl::waitUntilDeg(float deg){
 }
 
 
-void autonomousControl::updateRoller1(int pwr){ roller1Pct = pwr; }
-void autonomousControl::updateRoller2(int pwr){ roller2Pct = pwr; }
-void autonomousControl::updateRoller3(int pwr){ roller3Pct = pwr; }
-void autonomousControl::updateRoller4(int pwr){ roller4Pct = pwr; }
+void autonomousControl::updateRollers(int pwr){ 
+  roller1Pct = pwr;
+  roller2Pct = pwr; 
+}
 
 void autonomousControl::shootingBall(){
 }
 
 void autonomousControl::odometryMove(bool oMove){ movAB_Enabled = oMove; }
-
-void autonomousControl::turnVision(){
-  float angleVoltage = updatePID(&turnPID);
-
-  if(angleVoltage>12000) angleVoltage = 12000;
-  else if(angleVoltage<-12000) angleVoltage = -12000;
-
-  driveM(0, 0, angleVoltage);
-}
-
-void autonomousControl::strafeVision(){}
-
-void autonomousControl::forwardVision(){}
 
 void autonomousControl::driveM(double a3, double a4, double a1){
   simp->frontRight.move_voltage(a3 - a4 - a1);
@@ -149,15 +136,21 @@ void autonomousControl::driveM(double a3, double a4, double a1){
   simp->backLeft.move_voltage(-a3 + a4 - a1);
 }
 
-void autonomousControl::visionTowerAlign(int angDeg){
-}
-
 void autonomousControl::countBalls(){
 }
 
 void autonomousControl::rollerMove(){
   simp->roller1.move(roller1Pct);
   simp->roller2.move(roller2Pct);
+}
+
+void autonomousControl::deployRobot(){
+  updateRollers(-127);
+  pros::Task::delay(2000);
+  updateIntakePct(127);
+  pros::Task::delay(2000);
+  updateIntakePct(0);
+  updateRollers(0);
 }
 
 void autonomousControl::autoMain(){

@@ -30,25 +30,9 @@ class autonomousControl{
     ///
     /// This function will update the current power target for the roller1.
     /// @param pow Power in percentage units.
-    void updateRoller1(int pwr);
+    void updateRollers(int pwr);
 
-    /// Updates the target power for the roller1.
-    ///
-    /// This function will update the current power target for the roller2.
-    /// @param pow Power in percentage units.
-    void updateRoller2(int pwr);
-
-    /// Updates the target power for the roller1.
-    ///
-    /// This function will update the current power target for the roller3.
-    /// @param pow Power in percentage units.
-    void updateRoller3(int pwr);
-
-    /// Updates the target power for the roller1.
-    ///
-    /// This function will update the current power target for the roller4.
-    /// @param pow Power in percentage units.
-    void updateRoller4(int pwr);
+    void deployRobot();
 
     /// Waits until the robot is full.
     ///
@@ -83,11 +67,6 @@ class autonomousControl{
     /// This function has a while loop that will always be running during the autonmous period.
     /// The while loop will call functions to move the drive to the target position and any other motors will be set to their target. 
     void autoMain();
-
-    /// N/A
-    /// 
-    /// N/A
-    void visionTowerAlign(int angDeg);
 
     /// Sets PID constants for the robot in autonomous control.
     ///
@@ -158,9 +137,6 @@ class autonomousControl{
     void moveDrive(float x, float y, float turn);
     void odometryMove(bool oMove);
     void countBalls();
-    void turnVision();
-    void forwardVision();
-    void strafeVision();
     float averageRPM();
     float updatePID(PIDSettings *good);
     int turnCap(float distanceMag);

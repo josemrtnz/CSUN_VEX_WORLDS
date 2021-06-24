@@ -60,7 +60,7 @@ void autonomous() {
 }
 
 void opcontrol() {
-  autoRoutine.run(BLUE);
+  autoRoutine.run(RED);
 	startAuto.remove();
 	userControl driveJose = userControl(&simp);
   driveJose.driveLoop();

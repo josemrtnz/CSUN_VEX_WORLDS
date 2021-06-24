@@ -2,9 +2,9 @@
 
 autonomousRoutine::autonomousRoutine(autonomousControl *autoControl) {
   control = autoControl;
-  control->setPIDConstants( 1400, 0, 200, 4000, 
-                            1400, 0, 200, 4000,
-                            150, 20, 600, 2000);
+  control->setPIDConstants( 6000, 10, 24000, 4000, 
+                            6000, 10, 24000, 4000,
+                            300, 10, 600, 2000);
 }
 
 void autonomousRoutine::run(int autoSelection) {
@@ -25,9 +25,8 @@ void autonomousRoutine::run(int autoSelection) {
 }
 
 void autonomousRoutine::test(){
-  control->updateTargetPos(10, 10, 0);
-  control->waitUntilSettled();
-  control->updateTargetPos(0, 0, 0);
+  control->deployRobot();
+  control->updateTargetPos(0, 0, 180);
   control->waitUntilSettled();
   pros::Task::delay(1250);
 }

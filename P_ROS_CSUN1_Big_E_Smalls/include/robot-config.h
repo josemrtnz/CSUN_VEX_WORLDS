@@ -55,46 +55,48 @@ class robotChasis{
     pros::Controller mController = pros::Controller(pros::E_CONTROLLER_MASTER);
 
     /// Front Right Motor Instance
-    pros::Motor frontRight = pros::Motor(15, pros::E_MOTOR_GEARSET_18, true);
+    pros::Motor frontRight = pros::Motor(2, pros::E_MOTOR_GEARSET_06, true);
 
     /// Front Left Motor Instance
-    pros::Motor frontLeft = pros::Motor(9, pros::E_MOTOR_GEARSET_18, true);
+    pros::Motor frontLeft = pros::Motor(8, pros::E_MOTOR_GEARSET_06, true);
 
     /// Back Left Motor Instance
-    pros::Motor backLeft = pros::Motor (18, pros::E_MOTOR_GEARSET_18, true);
+    pros::Motor backLeft = pros::Motor (10, pros::E_MOTOR_GEARSET_06, true);
 
     /// Back Right Motor Instance
-    pros::Motor backRight = pros::Motor(11, pros::E_MOTOR_GEARSET_18, true);
+    pros::Motor backRight = pros::Motor(1, pros::E_MOTOR_GEARSET_06, true);
 
     /// Left Intake Motor Instance
-    pros::Motor leftIntake = pros::Motor(8, pros::E_MOTOR_GEARSET_18, false);
+    pros::Motor leftIntake = pros::Motor(9, pros::E_MOTOR_GEARSET_18, false);
 
     /// Right Intake Motor Instance
-    pros::Motor rightIntake = pros::Motor(6, pros::E_MOTOR_GEARSET_18, true);
+    pros::Motor rightIntake = pros::Motor(3, pros::E_MOTOR_GEARSET_18, true);
 
     /// Roller Motor Instance
-    pros::Motor roller1 = pros::Motor(1, pros::E_MOTOR_GEARSET_18, false);
+    pros::Motor roller1 = pros::Motor(15, pros::E_MOTOR_GEARSET_18, false);
 
     /// Roller Motor Instance
-    pros::Motor roller2 = pros::Motor(14, pros::E_MOTOR_GEARSET_18, false);
+    pros::Motor roller2 = pros::Motor(20, pros::E_MOTOR_GEARSET_18, false);
 
     //encoder leftTracker = encoder(Brain.ThreeWirePort.E);
     //encoder rightTracker = encoder(Brain.ThreeWirePort.A);
     //encoder backTracker = encoder(Brain.ThreeWirePort.C);
     /// Left Tracker Rotation Sensor Instance
-    pros::Rotation leftTracker = pros::Rotation(2); //true
+    pros::Rotation leftTracker = pros::Rotation(7); //true
 
     /// Right Tracker Rotation Sensor Instance
-    pros::Rotation rightTracker = pros::Rotation(2);
+    pros::Rotation rightTracker = pros::Rotation(4);
 
     /// Back Tracker Rotation Sensor Instance
-    pros::Rotation backTracker = pros::Rotation(2);
+    pros::Rotation backTracker = pros::Rotation(14);
     
     /// Limit Switch Sensor Instance
     pros::ADIDigitalIn limit = pros::ADIDigitalIn('G');
 
+    pros::ADILineSensor line1 = pros::ADILineSensor('A');
+
     /// IMU Sensor Instance
-    pros::Imu gyroM = pros::Imu(2);
+    pros::Imu gyroM = pros::Imu(22);
 
     /// Sets the brake type for the drive motors.
     ///
